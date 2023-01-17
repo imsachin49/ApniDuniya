@@ -1,15 +1,19 @@
-import express from "express";
+// import express from "express";
 
-import {
-  getUser,
-  getUserFriends,
-  addRemoveFriend,
-  findUser,
-} from "../controllers/users.js";
+// import {
+//   getUser,
+//   getUserFriends,
+//   addRemoveFriend,
+//   findUser,
+// } from "../controllers/users.js";
 
-import { verifyToken } from "../middleware/auth.js";
+// import { verifyToken } from "../middleware/auth.js";
+const express = require("express");
+const {getUser,getUserFriends,addRemoveFriend,findUser}=require("../controllers/users.js");
+const {verifyToken}=require("../middleware/auth.js");
 
 const router = express.Router();
+
 
 /* READ */
 router.get("/:id", verifyToken, getUser);
@@ -20,4 +24,5 @@ router.patch("/:id/:friendId", verifyToken, addRemoveFriend);
 
 router.get('/find/me',verifyToken,findUser);
 
-export default router;
+// export default router;
+module.exports = router;

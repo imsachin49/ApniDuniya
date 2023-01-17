@@ -1,9 +1,20 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+// import bcrypt from "bcrypt";
+// import jwt from "jsonwebtoken";
+// import User from "../models/User.js";
+// import upload  from "../handlers/multer.js";
+// import cloudinary from "../utils/cloudinary.js";
+// const cloudinary=require('../utils/cloudinary');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User.js");
+const upload=require('../handlers/multer');
+const cloudinary=require('../utilis/cloudinary');
 
 /* REGISTER USER */
-export const register = async (req, res) => {
+const register = async (req, res) => {
+  const result=await cloudinary.uploader.upload(req.file.path);
+  const imgUrl=result.secure_url;
+
   try {
     const {
       firstName,
@@ -24,7 +35,7 @@ export const register = async (req, res) => {
       lastName,
       email,
       password: passwordHash,
-      picturePath,
+      picturePath:imgUrl,
       friends,
       location,
       occupation,
@@ -40,7 +51,7 @@ export const register = async (req, res) => {
 };
 
 /* LOGGING IN */
-export const login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
@@ -57,3 +68,5 @@ export const login = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+module.exports = {register, login}

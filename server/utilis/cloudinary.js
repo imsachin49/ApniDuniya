@@ -1,13 +1,10 @@
-// import multer from 'multer';
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
 
-// export const multer=multer({
-//     storage:multer.diskStorage({}),
-//     fileFilter:(req,file,cb)=>{
-//         console.log(file);
-//         if(!file.mimetype.match('image/jpeg|image/png|image/gif')){  //image/jpeg contains both jpeg and jpg
-//             cb(new Error('File is not supported'),false)
-//             return
-//         }
-//         cb(null,true)
-//     }
-// })
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+module.exports = cloudinary;

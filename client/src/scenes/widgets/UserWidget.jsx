@@ -43,6 +43,7 @@ const UserWidget = ({ userId, picturePath }) => {
     lastName,
     location,
     occupation,
+    profilePicture,
     viewedProfile,
     impressions,
     friends,

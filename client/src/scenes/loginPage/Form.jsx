@@ -182,13 +182,14 @@ const Form = () => {
                   borderRadius="5px"
                   p="1rem"
                 >
-                  {/* <Dropzone
+
+                  <Dropzone
                     acceptedFiles=".jpg,.jpeg,.png"
                     multiple={false}
                     onDrop={(acceptedFiles) =>
                       setFieldValue("picture", acceptedFiles[0])
-                    }
-                  >
+                    }>
+
                     {({ getRootProps, getInputProps }) => (
                       <Box
                         {...getRootProps()}
@@ -204,10 +205,11 @@ const Form = () => {
                             <Typography>{values.picture.name}</Typography>
                             <EditOutlinedIcon />
                           </FlexBetween>
-                        )}
+                        )}                        
                       </Box>
                     )}
-                  </Dropzone> */}
+                  </Dropzone>
+
                 </Box>
               </>
             )}

@@ -1,7 +1,8 @@
-import User from "../models/User.js";
+// import User from "../models/User.js";
+const User = require("../models/User.js");
 
 /* READ */
-export const getUser = async (req, res) => {
+const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -11,7 +12,7 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const getUserFriends = async (req, res) => {
+const getUserFriends = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -33,7 +34,7 @@ export const getUserFriends = async (req, res) => {
 };
 
 /* UPDATE */
-export const addRemoveFriend = async (req, res) => {
+const addRemoveFriend = async (req, res) => {
   try {
     const { id, friendId } = req.params;
     const user = await User.findById(id);
@@ -67,7 +68,7 @@ export const addRemoveFriend = async (req, res) => {
 
 
 // Search user
-export const findUser=async(req,res)=>{
+const findUser=async(req,res)=>{
   const {firstName,lastName}=req.query;
   const queryObject={};
   
@@ -88,3 +89,5 @@ export const findUser=async(req,res)=>{
     res.status(404).json({message:err.message})  
   }
 }
+
+module.exports = {getUser,getUserFriends,addRemoveFriend,findUser}
