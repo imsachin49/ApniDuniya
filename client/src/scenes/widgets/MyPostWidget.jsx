@@ -36,6 +36,7 @@ const MyPostWidget = ({ picturePath }) => {
   
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
+  const [warn,setWarn]=useState(false);
   
   // const isUser=false;
   
@@ -56,16 +57,27 @@ const MyPostWidget = ({ picturePath }) => {
       formData.append("picturePath", image.name);
     }
 
-    const response = await fetch(`http://localhost:3001/posts`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-    const posts = await response.json();
-    dispatch(setPosts({ posts }));
-    setImage(null);
-    setPost("");
-  };
+    console.log(post)
+
+    if(post!=""){
+      const response = await fetch(`http://localhost:3001/posts`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const posts = await response.json();
+      dispatch(setPosts({ posts }));
+      setImage(null);
+      setPost("");
+    }
+    else{
+      setPost("");
+     setWarn(true);
+    }
+  }
+
+  console.log(post)
+
 
   return (
     <WidgetWrapper>
@@ -129,6 +141,7 @@ const MyPostWidget = ({ picturePath }) => {
       )}
 
       <Divider sx={{ margin: "1.25rem 0" }} />
+      {warn && <Typography color="red" style={{fontWeight:'bolder',textAlign:'center',paddingBottom:'10px'}}>You can not post without caption..</Typography>}
 
       <FlexBetween>
         <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
@@ -172,5 +185,6 @@ const MyPostWidget = ({ picturePath }) => {
     </WidgetWrapper>
   );
 };
+
 
 export default MyPostWidget;
