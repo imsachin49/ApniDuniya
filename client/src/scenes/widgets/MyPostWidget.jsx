@@ -63,7 +63,7 @@ import {
       console.log(token);
   
       if(post!=""){
-        const response = await fetch(`https://social-media-mern-lime.vercel.app/pos`, {
+        const response = await fetch(`https://social-media-mern-lime.vercel.app/posts/pos`, {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
           body: formData,

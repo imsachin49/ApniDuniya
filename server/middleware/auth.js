@@ -7,7 +7,7 @@ const verifyToken = async (req, res, next) => {
     console.log(token);
 
     if (!token) {
-      return res.status(403).json({error:"Access Denied",token:token,token2:'no undefined token'});
+      return res.status(403).json({error:"Access Denied",token:token,token2:'no undefined'});
     }
 
     if (token.startsWith("Bearer ")) {
