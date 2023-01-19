@@ -58,15 +58,19 @@ import {
         formData.append("picturePath", image.name);
       }
   
-      console.log(post)
+      console.log(post);
+      console.log(...formData);
   
       if(post!=""){
         const response = await fetch(`https://social-media-mern-lime.vercel.app/posts`, {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
           body: formData,
+          mode: "no-cors"
         });
+        console.log(response);
         const posts = await response.json();
+        console.log(posts);
         dispatch(setPosts({ posts }));
         console.log("posted succesfully");
         setImage(null);
@@ -186,6 +190,5 @@ import {
       </WidgetWrapper>
     );
   };
-  
   
   export default MyPostWidget;
