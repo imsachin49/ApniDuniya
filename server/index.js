@@ -80,7 +80,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 /* ROUTES WITH FILES */
 
 app.post("/auth/register", upload.single("picture"), register); //fieldname---->picture or testimage use this name in postman or anywhere 
-app.post("/pos", upload.single("picture"), createPost);
+// app.post("/pos", upload.single("picture"), createPost);
 
 /* ROUTES */
 app.use("/auth", authRoutes);
