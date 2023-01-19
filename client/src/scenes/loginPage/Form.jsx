@@ -68,6 +68,7 @@ const Form = () => {
       "https://social-media-mern-lime.vercel.app/auth/register",
       {
         method: "POST",
+        mode: "no-cors",
         body: formData,
       }
     );
@@ -83,6 +84,7 @@ const Form = () => {
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("https://social-media-mern-lime.vercel.app/auth/login", {
       method: "POST",
+      mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
   });

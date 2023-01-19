@@ -16,6 +16,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const getPosts = async () => {
     const response = await fetch("https://social-media-mern-lime.vercel.app/posts", {
       method: "GET",
+      mode: "no-cors",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
@@ -29,6 +30,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       `https://social-media-mern-lime.vercel.app/posts/${userId}/posts`,
       {
         method: "GET",
+        mode: "no-cors",
         headers: { Authorization: `Bearer ${token}` },
       }
     );

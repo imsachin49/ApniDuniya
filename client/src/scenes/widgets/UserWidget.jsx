@@ -24,6 +24,7 @@ const UserWidget = ({ userId, picturePath }) => {
   const getUser = async () => {
     const response = await fetch(`https://social-media-mern-lime.vercel.app/users/${userId}`, {
       method: "GET",
+      mode: "no-cors",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();

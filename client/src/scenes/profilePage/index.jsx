@@ -29,6 +29,7 @@ const ProfilePage = () => {
   const getUser = async () => {
     const response = await fetch(`https://social-media-mern-lime.vercel.app/users/${userId}`, {
       method: "GET",
+      mode: "no-cors",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
@@ -45,6 +46,7 @@ const [finduser,setFindedUser]=useState({});
   const findUser = async () => {
     const response = await fetch(`https://social-media-mern-lime.vercel.app/users/find/me?firstName=${name}`, {
       method: "GET",
+      mode: "no-cors",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
