@@ -60,6 +60,7 @@ import {
   
       console.log(post);
       console.log(...formData);
+      console.log(token);
   
       if(post!=""){
         const response = await fetch(`https://social-media-mern-lime.vercel.app/posts`, {
