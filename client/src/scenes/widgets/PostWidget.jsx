@@ -38,7 +38,6 @@ const PostWidget = ({
   const patchLike = async () => {
     const response = await fetch(`https://social-media-mern-lime.vercel.app/posts/${postId}/like`, {
       method: "PATCH",
-      mode: "no-cors",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
