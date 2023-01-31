@@ -27,7 +27,7 @@ const ProfilePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const getUser = async () => {
-    const response = await fetch(`https://social-media-mern-lime.vercel.app/users/${userId}`, {
+    const response = await fetch(`http://localhost:3001/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -43,7 +43,7 @@ const [finduser,setFindedUser]=useState({});
   const name='sachin'
   
   const findUser = async () => {
-    const response = await fetch(`https://social-media-mern-lime.vercel.app/users/find/me?firstName=${name}`, {
+    const response = await fetch(`http://localhost:3001/users/find/me?firstName=${name}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -9,23 +9,26 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   // const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
   const [posts,setMyPosts]=useState([]);
-  console.log(token)
-  console.log(posts);
 
   const getPosts = async () => {
-    const response = await fetch("https://social-media-mern-lime.vercel.app/posts", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    // console.log(data)
-    setMyPosts(data);
-    dispatch(setPosts({ posts: data }));
+    try{
+      const response = await fetch("http://localhost:3001/posts", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+        // mode: 'no-cors',
+      });
+      const data = await response.json();
+      // console.log(data)
+      setMyPosts(data);
+      dispatch(setPosts({ posts: data }));
+    }catch(err){
+      console.log(err);
+    }
   };
 
   const getUserPosts = async () => {
     const response = await fetch(
-      `https://social-media-mern-lime.vercel.app/posts/${userId}/posts`,
+      `http://localhost:3001/posts/${userId}/posts`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

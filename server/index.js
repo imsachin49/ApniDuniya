@@ -9,7 +9,6 @@
 // import path from "path";
 // import {upload} from '../handlers/multer.js';
 
-
 //Helmet.js is a useful Node.js module that helps you secure HTTP headers returned by your Express apps
 // import { fileURLToPath } from "url";
 
@@ -103,3 +102,4 @@ mongoose
     // Post.insertMany(posts);
   })
   .catch((error) => console.log(`${error} did not connect`));
+  
