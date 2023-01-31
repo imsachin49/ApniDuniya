@@ -16,7 +16,7 @@ const FriendListWidget = ({ userId }) => {
       `https://social-media-mern-lime.vercel.app/users/${userId}/friends`,
       {
         method: "GET",
-        mode: "no-cors",
+        // mode: "no-cors",
         headers: { Authorization: `Bearer ${token}` },
       }
     );

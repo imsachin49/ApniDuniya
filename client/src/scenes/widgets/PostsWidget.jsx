@@ -4,7 +4,6 @@ import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 import {format} from 'timeago.js'
 
-
 const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   // const posts = useSelector((state) => state.posts);
