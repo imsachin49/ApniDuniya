@@ -64,7 +64,7 @@ import {
   
       if(post!==""){
         // const response = await fetch(`https://social-media-mern-lime.vercel.app/posts`, {
-        const response= await fetch(`http://localhost:3001/posts`,{  
+        const response= await fetch(`https://apni-duniya-social.vercel.app/posts`,{  
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
           body: formData,

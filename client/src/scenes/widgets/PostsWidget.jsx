@@ -12,7 +12,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   const getPosts = async () => {
     try{
-      const response = await fetch("http://localhost:3001/posts", {
+      const response = await fetch("https://apni-duniya-social.vercel.app/posts", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
         // mode: 'no-cors',
@@ -28,7 +28,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   const getUserPosts = async () => {
     const response = await fetch(
-      `http://localhost:3001/posts/${userId}/posts`,
+      `https://apni-duniya-social.vercel.app/posts/${userId}/posts`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
