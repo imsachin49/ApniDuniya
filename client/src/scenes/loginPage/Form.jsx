@@ -8,6 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 
+import CircularProgress from '@mui/material/CircularProgress';
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -49,6 +50,7 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
+  const [loading, setLoading] = useState(false);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,37 +59,40 @@ const Form = () => {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) => {
-    // this allows us to send form info with image
-    const formData = new FormData();
-    for (let value in values) {
-      formData.append(value, values[value]);
-    }
-    formData.append("picturePath", values.picture.name);
-
-    const savedUserResponse = await fetch(
-      "https://apni-duniya-social.vercel.app/auth/register",
-      {
-        method: "POST",
-        body: formData,
+    try {
+        const formData = new FormData();
+      for (let value in values) {
+        formData.append(value, values[value]);
       }
-    );
-
-    const savedUser = await savedUserResponse.json();
-    onSubmitProps.resetForm();
-
-    if (savedUser) {
-      setPageType("login");
+      formData.append("picturePath", values.picture.name);
+      setLoading(true);
+      const savedUserResponse = await fetch(
+        "https://apni-duniya-social.vercel.app/auth/register",{
+          method: "POST",
+          body: formData,
+        });
+      const savedUser = await savedUserResponse.json();
+      setLoading(false);
+      onSubmitProps.resetForm();
+      if (savedUser) {
+        setPageType("login");
+      }
+    } catch (error) {
+      console.log(error)
     }
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("https://apni-duniya-social.vercel.app/auth/login", {
+   try{ 
+      setLoading(true);
+      const loggedInResponse = await fetch("https://apni-duniya-social.vercel.app/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
   });
 
     const loggedIn = await loggedInResponse.json();
+    setLoading(false);
     onSubmitProps.resetForm();
     if (loggedIn) {
       dispatch(
@@ -97,6 +102,8 @@ const Form = () => {
         })
       );
       navigate("/home");
+    }}catch(err){
+      console.log(err)
     }
   };
 
@@ -239,7 +246,7 @@ const Form = () => {
 
           {/* BUTTONS */}
           <Box>
-            <Button
+           { !loading ? (<Button
               fullWidth
               type="submit"
               sx={{
@@ -251,7 +258,7 @@ const Form = () => {
               }}
             >
               {isLogin ? "LOGIN" : "REGISTER"}
-            </Button>
+            </Button>) : (<div style={{display:'flex',justifyContent:'center',margin:'10px 0px'}}><CircularProgress color="primary" /></div>)}
             <Typography
               onClick={() => {
                 setPageType(isLogin ? "register" : "login");

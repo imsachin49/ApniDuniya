@@ -19,6 +19,7 @@ import {
     useMediaQuery,
   } from "@mui/material";
   
+  import CircularProgress from '@mui/material/CircularProgress';
   import FlexBetween from "components/FlexBetween";
   import Dropzone from "react-dropzone";
   import UserImage from "components/UserImage";
@@ -33,17 +34,12 @@ import {
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
     const [post, setPost] = useState("");
+    const [loading,setLoading]=useState(false);
     const { palette } = useTheme();
     
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const [warn,setWarn]=useState(false);
-    
-    // const isUser=false;
-    
-    // if(token){
-    //   isUser=true;
-    // }
   
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const mediumMain = palette.neutral.mediumMain;
@@ -62,24 +58,26 @@ import {
       console.log(...formData);
       console.log(token);
   
-      if(post!==""){
-        // const response = await fetch(`https://social-media-mern-lime.vercel.app/posts`, {
-        const response= await fetch(`https://apni-duniya-social.vercel.app/posts`,{  
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
-          body: formData,
-          // mode: "no-cors"
-        });
-        console.log(response);
-        const posts = await response.json();
-        console.log(posts);
-        dispatch(setPosts({ posts }));
-        console.log("posted succesfully");
-        setImage(null);
-        setPost("");
-      }
+      if(post!=="" && image!==null){
+          setLoading(true);
+          const response= await fetch(`https://apni-duniya-social.vercel.app/posts`,{  
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData,
+          });
+          console.log(response);
+          const posts = await response.json();
+          setLoading(false);
+          console.log(posts);
+          dispatch(setPosts({ posts }));
+          console.log("posted succesfully");
+          setImage(null);
+          setPost("");
+          // to refresh page automatically once post is done
+          window.location.reload();
+        }
       else{
-        setPost("");
+       setPost("");
        setWarn(true);
       }
     }
@@ -148,8 +146,8 @@ import {
         )}
   
         <Divider sx={{ margin: "1.25rem 0" }} />
-        {warn && <Typography color="red" style={{fontWeight:'bolder',textAlign:'center',paddingBottom:'10px'}}>You can not post without caption..</Typography>}
-  
+        {warn && <Typography color="red" style={{fontWeight:'bolder',textAlign:'center',paddingBottom:'10px'}}>You can not post without caption or image..</Typography>}
+
         <FlexBetween>
           <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
             <ImageOutlined sx={{ color: mediumMain }} />
@@ -184,9 +182,9 @@ import {
             </FlexBetween>
           )}
   
-          <Button style={{backgroundColor:"black"}} onClick={handlePost} >
+          {!loading ? (<Button style={{backgroundColor:"black"}} onClick={handlePost} >
             POST
-          </Button>
+          </Button>) :(<div style={{display:'flex',justifyContent:'center',margin:'10px 0px'}}><CircularProgress color="primary" /></div>) }
           
         </FlexBetween>
       </WidgetWrapper>
