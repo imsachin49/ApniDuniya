@@ -92,6 +92,7 @@ const Form = () => {
   });
 
     const loggedIn = await loggedInResponse.json();
+    // console.log(loggedIn)
     setLoading(false);
     onSubmitProps.resetForm();
     if (loggedIn) {

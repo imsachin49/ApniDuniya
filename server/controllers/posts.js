@@ -54,46 +54,45 @@ const getFeedPosts = async (req, res) => {
 };
 
 /* UPDATE */
-// const likePost = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { userId } = req.body;
-//     const post = await Post.findById(id);
-//     const isLiked = post.likes.get(userId);
+const likePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const post = await Post.findById(id);
+    const isLiked = post.likes.get(userId);
 
-//     if (isLiked) {
-//       post.likes.delete(userId);
-//     } else {
-//       post.likes.set(userId, true);
-//     }
+    if (isLiked) {
+      post.likes.delete(userId);
+    } else {
+      post.likes.set(userId, true);
+    }
 
-//     const updatedPost = await Post.findByIdAndUpdate(
-//       id,
-//       { likes: post.likes },
-//       { new: true }
-//     );
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      { likes: post.likes },
+      { new: true }
+    );
 
-//     res.status(200).json(updatedPost);
-//   } catch (err) {
-//     res.status(404).json({ message: err.message });
-//   }
-// };
-
+    res.status(200).json(updatedPost);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
 
 // //like / dislike a post
-const likePost=async (req, res) => {
-    try {
-      const post = await Post.findById(req.params.id);
-      if (!post.likes.includes(req.body.userId)) {
-        await post.updateOne({ $push: { likes: req.body.userId } });
-        res.status(200).json("The post has been liked");
-      } else {
-        await post.updateOne({ $pull: { likes: req.body.userId } });
-        res.status(200).json("The post has been disliked");
-      }
-    } catch (err) {
-      res.status(500).json(err);
-    }
-};
+// router.put("/:id/like", async (req, res) => {
+//     try {
+//       const post = await postDB.findById(req.params.id);
+//       if (!post.likes.includes(req.body.userId)) {
+//         await post.updateOne({ $push: { likes: req.body.userId } });
+//         res.status(200).json("The post has been liked");
+//       } else {
+//         await post.updateOne({ $pull: { likes: req.body.userId } });
+//         res.status(200).json("The post has been disliked");
+//       }
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+// });
 
 module.exports = {createPost, getFeedPosts, getUserPosts, likePost}

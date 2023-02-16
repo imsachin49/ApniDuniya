@@ -9,6 +9,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   // const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
   const [posts,setMyPosts]=useState([]);
+  console.log(token)
 
   const getPosts = async () => {
     try{

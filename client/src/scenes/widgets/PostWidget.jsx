@@ -36,7 +36,10 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    const response = await fetch(`https://apni-duniya-social.vercel.app/posts/${postId}/like`, {
+    console.log(postId, loggedInUserId)
+    try{
+      const response = await fetch(`  import WidgetWrapper from "components/WidgetWrapper";
+      `, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -44,8 +47,13 @@ const PostWidget = ({
       },
       body: JSON.stringify({ userId: loggedInUserId }),
     });
+    // console.log(response)
     const updatedPost = await response.json();
+    console.log(updatedPost)
     dispatch(setPost({ post: updatedPost }));
+  }catch(err){
+    console.log(err)
+  }
   };
 
   return (
@@ -73,7 +81,7 @@ const PostWidget = ({
           <FlexBetween gap="0.3rem">
             <IconButton onClick={patchLike}>
               {isLiked ? (
-                <FavoriteOutlined sx={{ color: primary }} />
+                <FavoriteOutlined sx={{ color: 'red' }} />
               ) : (
                 <FavoriteBorderOutlined />
               )}
