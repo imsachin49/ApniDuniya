@@ -11,6 +11,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
+import { useEffect } from "react";
 
 const PostWidget = ({
   postId,
@@ -28,12 +29,17 @@ const PostWidget = ({
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
-  const isLiked = Boolean(likes[loggedInUserId]);
-  const likeCount = Object.keys(likes).length;
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
+  const [like, setLike] = useState(Object.keys(likes).length);
+  const [isLiked, setIsLiked] = useState(false);
+
+   //like or dislike post
+   useEffect(() => {
+    setIsLiked(likes[loggedInUserId]);
+  }, [loggedInUserId, likes]);
 
   const patchLike = async () => {
     console.log(postId, loggedInUserId)
@@ -44,15 +50,15 @@ const PostWidget = ({
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: loggedInUserId }),
-    });
-    // console.log(response)
-    const updatedPost = await response.json();
-    console.log(updatedPost)
-    dispatch(setPost({ post: updatedPost }));
-  }catch(err){
-    console.log(err)
-  }
+        body: JSON.stringify({ userId: loggedInUserId }),
+      });
+        const updatedPost = await response.json();
+        dispatch(setPost({ post: updatedPost }));
+    } catch(err){
+      console.log(err)
+    }
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
   };
 
   return (
@@ -85,7 +91,7 @@ const PostWidget = ({
                 <FavoriteBorderOutlined />
               )}
             </IconButton>
-            <Typography>{likeCount}</Typography>
+            <Typography>{like}</Typography>
           </FlexBetween>
 
           {/* //comment adding soon */}

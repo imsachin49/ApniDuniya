@@ -253,9 +253,9 @@ const Form = () => {
               sx={{
                 m: "2rem 0",
                 p: "1rem",
-                backgroundColor: palette.primary.main,
-                color: palette.background.alt,
-                "&:hover": { color: palette.primary.main },
+                backgroundColor: 'rgb(244, 51, 151)',
+                color: 'white',
+                "&:hover": { color:'white',backgroundColor: '#999' },
               }}
             >
               {isLogin ? "LOGIN" : "REGISTER"}
@@ -267,10 +267,10 @@ const Form = () => {
               }}
               sx={{
                 textDecoration: "underline",
-                color: palette.primary.main,
+                color: 'rgb(244, 51, 151)',
                 "&:hover": {
                   cursor: "pointer",
-                  color: palette.primary.light,
+                  color: 'blue',
                 },
               }}
             >
