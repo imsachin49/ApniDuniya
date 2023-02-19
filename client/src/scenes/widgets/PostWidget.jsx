@@ -38,8 +38,7 @@ const PostWidget = ({
   const patchLike = async () => {
     console.log(postId, loggedInUserId)
     try{
-      const response = await fetch(`  import WidgetWrapper from "components/WidgetWrapper";
-      `, {
+      const response = await fetch(`https://apni-duniya-social.vercel.app/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
