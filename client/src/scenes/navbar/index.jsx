@@ -42,8 +42,14 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
-  const [search,setSearch]=useState('');
-  console.log(search);
+  const [username,setuserName]=useState('');
+  console.log(username);
+
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    console.log(username);
+    navigate(`/search?firstName=${username}`);
+  }
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt} boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'>
@@ -70,10 +76,13 @@ const Navbar = () => {
             padding="0.1rem 1.5rem"
             border="1px solid grey"
           >
-            <InputBase placeholder="Search users.." onChange={(e)=>setSearch(e.target.value)} />
-            <IconButton>
+            <form onSubmit={handleSubmit}>
+              <InputBase placeholder="Search users.." onChange={e=>setuserName(e.target.value)} name='username' value={username} />
+              <IconButton>
               <Search />
-            </IconButton>
+              </IconButton>
+
+            </form>
           </FlexBetween>
         )}
       </FlexBetween>
