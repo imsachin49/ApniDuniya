@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
 import { useEffect } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const PostWidget = ({
   postId,
@@ -35,7 +36,8 @@ const PostWidget = ({
   const primary = palette.primary.main;
   const [like, setLike] = useState(Object.keys(likes).length);
   const [isLiked, setIsLiked] = useState(false);
-
+  const isCurrentUser = loggedInUserId === postUserId;
+  console.log(isCurrentUser);
    //like or dislike post
    useEffect(() => {
     setIsLiked(likes[loggedInUserId]);
@@ -55,11 +57,28 @@ const PostWidget = ({
         const updatedPost = await response.json();
         dispatch(setPost({ post: updatedPost }));
     } catch(err){
-      console.log(err)
+      console.log(err);
     }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
+
+  const deletePost = async (id) => {
+    try{
+      const response = await fetch(`https://apni-duniya-social.vercel.app/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+        body: JSON.stringify({ userId: loggedInUserId }),
+      });
+        const updatedPost = await response.json();
+        dispatch(setPost({ post: updatedPost }));
+    } catch(err){
+      console.log(err);
+    }
+  }
 
   return (
     <WidgetWrapper m="2rem 0">
@@ -106,9 +125,10 @@ const PostWidget = ({
 
         </FlexBetween>
 
-        <IconButton>
-          <ShareOutlined />
-        </IconButton>
+        {isCurrentUser && <IconButton onClick={()=>deletePost(`/${postId}`)}>
+          <DeleteIcon />
+        </IconButton>}
+
       </FlexBetween>
       {isComments && (
         <Box mt="0.5rem">

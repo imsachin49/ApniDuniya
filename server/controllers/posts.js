@@ -90,4 +90,4 @@ const deletePost = async (req, res) => {
 };
 
 
-module.exports = {createPost, getFeedPosts, getUserPosts, likePost}
+module.exports = {createPost, getFeedPosts, getUserPosts, likePost, deletePost}
