@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const verifyToken = async (req, res, next) => {
   try {
     let token = req.header("Authorization");
-    // console.log(token)
-
     if (!token) {
       return res.status(403).json({error:"Access Denied",token:token,token2:'no undefined'});
     }
@@ -29,5 +27,17 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+// verifyTokenAndAdmin api
+// const verifyTokenAndAdmin = async (req, res, next) => {}
 
-module.exports = {verifyToken};
+const verifyTokenAndAdmin = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403).json("You are not alowed to do that!");
+    }
+  });
+};
+
+module.exports = {verifyToken,verifyTokenAndAdmin};

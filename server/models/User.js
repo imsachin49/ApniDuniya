@@ -33,6 +33,10 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
     location: String,
     occupation: String,
     birthday: Date,

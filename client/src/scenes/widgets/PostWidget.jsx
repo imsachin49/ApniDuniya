@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
 import { useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const PostWidget = ({
   postId,
@@ -30,16 +31,21 @@ const PostWidget = ({
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
+  const user= useSelector((state) => state.user);
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
   const [like, setLike] = useState(Object.keys(likes).length);
   const [isLiked, setIsLiked] = useState(false);
-  const isCurrentUser = loggedInUserId === postUserId;
+  // const isCurrentUser = loggedInUserId === postUserId;
   console.log(isCurrentUser);
-   //like or dislike post
-   useEffect(() => {
+  const [loading, setLoading] = useState(false);
+
+
+  const deleteAccess = (loggedInUserId === postUserId) || user.isAdmin;
+
+  useEffect(() => {
     setIsLiked(likes[loggedInUserId]);
   }, [loggedInUserId, likes]);
 
@@ -65,7 +71,8 @@ const PostWidget = ({
 
   const deletePost = async (id) => {
     try{
-      const response = await fetch(`https://apni-duniya-social.vercel.app/posts/${id}`, {
+      setLoading(true);
+      const response = await fetch(`https://apni-duniya-social.vercel.app/posts${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -73,8 +80,10 @@ const PostWidget = ({
       },
         body: JSON.stringify({ userId: loggedInUserId }),
       });
-        const updatedPost = await response.json();
-        dispatch(setPost({ post: updatedPost }));
+      const updatedPost = await response.json();
+      dispatch(setPost({ post: updatedPost }));
+      setLoading(false);  
+      window.location.reload();
     } catch(err){
       console.log(err);
     }
@@ -125,9 +134,11 @@ const PostWidget = ({
 
         </FlexBetween>
 
-        {isCurrentUser && <IconButton onClick={()=>deletePost(`/${postId}`)}>
-          <DeleteIcon />
-        </IconButton>}
+        {deleteAccess && 
+          <IconButton onClick={()=>deletePost(`/${postId}`)}>
+            {!loading ? <DeleteIcon /> : <CircularProgress />}
+          </IconButton>
+        }
 
       </FlexBetween>
       {isComments && (
