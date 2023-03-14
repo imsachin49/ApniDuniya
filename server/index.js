@@ -13,6 +13,7 @@ const { fileURLToPath } = require("url");
 const authRoutes = require("./routes/auth.js");
 const userRoutes = require("./routes/users.js");
 const postRoutes = require("./routes/posts.js");
+const commentRoutes = require("./routes/comments.js");
 
 const { register } = require("./controllers/auth.js");
 const { createPost } = require("./controllers/posts.js");
