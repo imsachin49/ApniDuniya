@@ -13,7 +13,7 @@ const { fileURLToPath } = require("url");
 const authRoutes = require("./routes/auth.js");
 const userRoutes = require("./routes/users.js");
 const postRoutes = require("./routes/posts.js");
-const commentRoutes = require("./routes/comments.js");
+const commentRoutes = require("./routes/comment.js");
 
 const { register } = require("./controllers/auth.js");
 const { createPost } = require("./controllers/posts.js");
@@ -34,7 +34,6 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-
 
 app.post("/auth/register", upload.single("picture"), register); //fieldname---->picture or testimage use this name in postman or anywhere 
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
