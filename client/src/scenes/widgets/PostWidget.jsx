@@ -25,7 +25,7 @@ const PostWidget = ({
   picturePath,
   userPicturePath,
   likes,
-  comments,
+  // comments,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
@@ -39,13 +39,14 @@ const PostWidget = ({
   const [like, setLike] = useState(Object.keys(likes).length);
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const deleteAccess = (loggedInUserId === postUserId) || user.isAdmin;
 
   useEffect(() => {
     setIsLiked(likes[loggedInUserId]);
   }, [loggedInUserId, likes]);
+  console.log(postId);
 
   const patchLike = async () => {
     try{
@@ -64,7 +65,7 @@ const PostWidget = ({
     }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
-  };
+  };  
 
   const deletePost = async (id) => {
     try{
@@ -86,7 +87,7 @@ const PostWidget = ({
     }
   }  
 
-  const commentId=JSON.stringify(comments);
+  // const commentId=JSON.stringify(comments);
   // console.log(typeof(Comments))
 
   const fetchComments = async () => {
@@ -97,13 +98,16 @@ const PostWidget = ({
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
+      // body: JSON.stringify({ userId: loggedInUserId }),
     }); 
-      const updatedPost = await response.json();
-      setComments(updatedPost);
+      const cmt = await response.json();
+      setComments(cmt);
     } catch(err){
       console.log(err);
     }
   }
+
+  // console.log(comments)
 
 
 
@@ -148,7 +152,7 @@ const PostWidget = ({
             <IconButton onClick={() => setIsComments(!isComments)}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            <Typography>{comments.length}</Typography>
+            {/* <Typography>{comments.length}</Typography> */}
           </FlexBetween>
 
         </FlexBetween>
@@ -160,7 +164,7 @@ const PostWidget = ({
         }
 
       </FlexBetween>
-      {isComments && (
+      {/* {isComments && (
         <Box mt="0.5rem">
           {comments.map((comment) => (
             <Box key={comment._id}>
@@ -172,7 +176,7 @@ const PostWidget = ({
           ))}
           <Divider />
         </Box>
-      )}
+      )} */}
     </WidgetWrapper>
   );
 };

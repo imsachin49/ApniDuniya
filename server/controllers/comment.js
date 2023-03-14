@@ -37,11 +37,11 @@ const addComment = async (req, res) => {
 const getComments = async (req, res) => {
     try {
       const { id } = req.params;
-      const post = await Post.findById(id).populate('comments');
+      const post = await Post.findById(id).populate('comment');
       if (!post) {
         return res.status(404).json('Post not found');
       }
-      console.log(post.comments)
+      console.log(post.comments);
       res.status(200).json(post.comments);
     } catch (error) {
       console.log(error);
