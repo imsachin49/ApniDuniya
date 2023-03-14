@@ -42,7 +42,7 @@ const getComments = async (req, res) => {
         return res.status(404).json('Post not found');
       }
       console.log(post.comments)
-      res.status(200).json(post);
+      res.status(200).json(post.comments);
     } catch (error) {
       console.log(error);
       res.status(500).send('Internal server error');
