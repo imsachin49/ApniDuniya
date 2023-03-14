@@ -7,8 +7,12 @@ const Post=require("../models/Post.js");
 const addComment = async (req, res) => {
     try{
       const {user}=req;
-      console.log(user);
+      const myUser=await User.findById(user.id);
+      const name=myUser.firstName+" "+myUser.lastName;
+      console.log(name);
+
       const { id } = req.params; 
+      console.log(user);
       const post = await Post.findById(id);
       console.log(post)
 
@@ -20,12 +24,13 @@ const addComment = async (req, res) => {
         comment: req.body.comment,
         user: user.id,
         post: post._id,
+        name:name,
       });
       await comment.save();
       
       post.comments.push(comment._id);
       await post.save();
-      res.status(200).json(post);
+      res.status(200).json(comment);
 
     } catch (error) {
       console.log(error);
@@ -33,11 +38,12 @@ const addComment = async (req, res) => {
     }
 };
 
-
 const getComments = async (req, res) => {
     try {
       const { id } = req.params;
-      const post = await Post.findById(id).populate('comment');
+      console.log(id)
+      const post = await Post.findById(id).populate('comments');
+      console.log(post)
       if (!post) {
         return res.status(404).json('Post not found');
       }
@@ -45,7 +51,7 @@ const getComments = async (req, res) => {
       res.status(200).json(post.comments);
     } catch (error) {
       console.log(error);
-      res.status(500).send('Internal server error');
+      res.status(500).json('Internal server error');
     }
 }
 

@@ -4,6 +4,8 @@ import {
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
+
+import {Button} from '@mui/material';
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
@@ -46,7 +48,6 @@ const PostWidget = ({
   useEffect(() => {
     setIsLiked(likes[loggedInUserId]);
   }, [loggedInUserId, likes]);
-  console.log(postId);
 
   const patchLike = async () => {
     try{
@@ -86,32 +87,26 @@ const PostWidget = ({
       console.log(err);
     }
   }  
-
-  // const commentId=JSON.stringify(comments);
-  // console.log(typeof(Comments))
-
-  const fetchComments = async () => {
+  
+  const getComments = async () => {
     try{
-      const response = await fetch(`https://apni-duniya-social.vercel.app/comments/${postId}/comments`, {
+      const response = await fetch(`http://localhost:3001/comments/${postId}/comments`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify({ userId: loggedInUserId }),
     }); 
       const cmt = await response.json();
       setComments(cmt);
-    } catch(err){
+    }catch(err){
       console.log(err);
     }
   }
 
-  // console.log(comments)
-
-
-
-
+  useEffect(() => {
+    getComments();
+  },[])
 
   return (
     <WidgetWrapper m="2rem 0">
@@ -152,7 +147,7 @@ const PostWidget = ({
             <IconButton onClick={() => setIsComments(!isComments)}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            {/* <Typography>{comments.length}</Typography> */}
+            <Typography>{comments.length}</Typography>
           </FlexBetween>
 
         </FlexBetween>
@@ -164,19 +159,26 @@ const PostWidget = ({
         }
 
       </FlexBetween>
-      {/* {isComments && (
+      {isComments &&
+        
+        (<form>
+          <input type='text' placeholder="add your comment" style={{}} />
+          <Button type="submit">Add</Button>
+        </form>)
+
+       (
         <Box mt="0.5rem">
           {comments.map((comment) => (
             <Box key={comment._id}>
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                {comment}
+                <b style={{fontSize:'15px',textTransform:'capitalize',color:'#333'}}>{comment.name ? comment.name : "unknown"} : </b>{comment.comment}
               </Typography>
             </Box>
           ))}
           <Divider />
         </Box>
-      )} */}
+      )}
     </WidgetWrapper>
   );
 };
