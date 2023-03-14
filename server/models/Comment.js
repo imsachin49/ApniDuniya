@@ -1,4 +1,6 @@
 const mongoose=require('mongoose');
+// const User=require('./User.js');
+// const Post=require('./Post.js');
 const commentSchema=new mongoose.Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,

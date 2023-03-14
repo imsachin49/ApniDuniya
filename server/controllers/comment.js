@@ -6,28 +6,30 @@ const Post=require("../models/Post.js");
 
 const addComment = async (req, res) => {
     try {
-      const { user } = req; 
+      const {user}=req;
+      console.log(user);
       const { id } = req.params; 
       const post = await Post.findById(id);
+      console.log(post)
+
       if (!post) {
         return res.status(404).send('Post not found');
       }
   
-      const { content } = req.body;
       const comment = new Comment({
-        content,
-        author: user._id,
+        comment: req.body.comment,
+        user: user.id,
         post: post._id,
       });
       await comment.save();
-  
+      
       post.comments.push(comment._id);
       await post.save();
-  
-      res.status(200).send(comment);
+      res.status(200).json(post);
+
     } catch (error) {
       console.log(error);
-      res.status(500).send('Internal server error');
+      res.status(500).json('Internal server error');
     }
 };
 
@@ -37,9 +39,10 @@ const getComments = async (req, res) => {
       const { id } = req.params;
       const post = await Post.findById(id).populate('comments');
       if (!post) {
-        return res.status(404).send('Post not found');
+        return res.status(404).json('Post not found');
       }
-      res.status(200).send(post.comments);
+      console.log(post.comments)
+      res.status(200).json(post);
     } catch (error) {
       console.log(error);
       res.status(500).send('Internal server error');
@@ -49,7 +52,7 @@ const getComments = async (req, res) => {
 const updateComment = async (req, res) => {
     try{
         const updatedComment=await Comment.findByIdAndUpdate(req.params.commentId, {$set:req.body}, {new:true});
-        res.status(200).send(updatedComment);
+        res.status(200).json(updatedComment);
     }catch(error){
         console.log(error);
         res.status(500).send('Internal server error');
@@ -59,7 +62,7 @@ const updateComment = async (req, res) => {
 const deleteComment = async (req, res) => {    
     try{
         const deletedComment=await Comment.findByIdAndDelete(req.params.commentId);
-        res.status(200).send(deletedComment);
+        res.status(200).json(deletedComment);
     }catch(error){
         console.log(error);
         res.status(500).send('Internal server error');
