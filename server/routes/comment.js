@@ -3,7 +3,7 @@ const Comment=require("../models/Comment.js");
 const User=require("../models/User.js");
 const Post=require("../models/Post.js");
 const {addComment, getComments, updateComment, deleteComment}=require("../controllers/comment.js");
-const {verifyToken,verifyTokenAndAdmin}=require("../middlewares/auth.js");
+const {verifyToken,verifyTokenAndAdmin}=require("../middleware/auth.js");
 
 router.post('/:id/comments', verifyToken, addComment);
 router.get('/:id/comments', verifyToken, getComments);

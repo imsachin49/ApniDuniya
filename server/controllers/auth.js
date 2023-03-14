@@ -1,9 +1,3 @@
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-// import User from "../models/User.js";
-// import upload  from "../handlers/multer.js";
-// import cloudinary from "../utils/cloudinary.js";
-// const cloudinary=require('../utils/cloudinary');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
