@@ -9,3 +9,5 @@ router.post('/:id/comments', verifyToken, addComment);
 router.get('/:id/comments', verifyToken, getComments);
 router.patch('/:id/comments/:commentId', verifyToken, updateComment);
 router.delete('/:id/comments/:commentId', verifyToken, deleteComment);
+
+module.exports=router;

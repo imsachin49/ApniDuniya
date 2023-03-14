@@ -4,7 +4,6 @@ const Comment=require("../models/Comment.js");
 const User=require("../models/User.js");
 const Post=require("../models/Post.js");
 
-
 const addComment = async (req, res) => {
     try {
       const { user } = req; 
@@ -56,7 +55,6 @@ const updateComment = async (req, res) => {
         res.status(500).send('Internal server error');
     }
 }
-
 
 const deleteComment = async (req, res) => {    
     try{
