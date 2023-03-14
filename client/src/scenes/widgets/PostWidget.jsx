@@ -38,10 +38,7 @@ const PostWidget = ({
   const primary = palette.primary.main;
   const [like, setLike] = useState(Object.keys(likes).length);
   const [isLiked, setIsLiked] = useState(false);
-  // const isCurrentUser = loggedInUserId === postUserId;
-  console.log(isCurrentUser);
   const [loading, setLoading] = useState(false);
-
 
   const deleteAccess = (loggedInUserId === postUserId) || user.isAdmin;
 
@@ -124,13 +121,12 @@ const PostWidget = ({
 
           {/* //comment adding soon */}
 
-          {/* <FlexBetween gap="0.3rem"> */}
-            {/* <IconButton onClick={() => setIsComments(!isComments)}> */}
-            <IconButton>
+          <FlexBetween gap="0.3rem">
+            <IconButton onClick={() => setIsComments(!isComments)}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            {/* <Typography>{comments.length}</Typography> */}
-          {/* </FlexBetween> */}
+            <Typography>{comments.length}</Typography>
+          </FlexBetween>
 
         </FlexBetween>
 

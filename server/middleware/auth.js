@@ -27,9 +27,9 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-// verifyTokenAndAdmin api
-// const verifyTokenAndAdmin = async (req, res, next) => {}
 
+// this will verify the token and check if the user is admin or not 
+// if the user is admin then it will call the next function else it will send a 403 status code
 const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.isAdmin) {

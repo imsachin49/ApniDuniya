@@ -14,6 +14,12 @@ const postSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
     location: String,
     description: String,
     picturePath: String,
@@ -21,10 +27,6 @@ const postSchema = mongoose.Schema(
     likes: {
       type: Map,
       of: Boolean,
-    },
-    comments: {
-      type: Array,
-      default: [],
     },
   },
   { timestamps: true }
