@@ -39,6 +39,7 @@ const PostWidget = ({
   const [like, setLike] = useState(Object.keys(likes).length);
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
+  // const [comments, setComments] = useState([]);
 
   const deleteAccess = (loggedInUserId === postUserId) || user.isAdmin;
 
@@ -47,7 +48,6 @@ const PostWidget = ({
   }, [loggedInUserId, likes]);
 
   const patchLike = async () => {
-    console.log(postId, loggedInUserId)
     try{
       const response = await fetch(`https://apni-duniya-social.vercel.app/posts/${postId}/like`, {
       method: "PATCH",
@@ -84,7 +84,30 @@ const PostWidget = ({
     } catch(err){
       console.log(err);
     }
+  }  
+
+  const commentId=JSON.stringify(comments);
+  // console.log(typeof(Comments))
+
+  const fetchComments = async () => {
+    try{
+      const response = await fetch(`https://apni-duniya-social.vercel.app/comments/${postId}/comments`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }); 
+      const updatedPost = await response.json();
+      setComments(updatedPost);
+    } catch(err){
+      console.log(err);
+    }
   }
+
+
+
+
 
   return (
     <WidgetWrapper m="2rem 0">
@@ -139,8 +162,8 @@ const PostWidget = ({
       </FlexBetween>
       {isComments && (
         <Box mt="0.5rem">
-          {comments.map((comment, i) => (
-            <Box key={`${name}-${i}`}>
+          {comments.map((comment) => (
+            <Box key={comment._id}>
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
                 {comment}
