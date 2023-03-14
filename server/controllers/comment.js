@@ -6,7 +6,7 @@ const Post=require("../models/Post.js");
 
 const addComment = async (req, res) => {
     try{
-      const {user}=req.body;
+      const {user}=req;
       console.log(user);
       const { id } = req.params; 
       const post = await Post.findById(id);
@@ -23,7 +23,7 @@ const addComment = async (req, res) => {
       });
       await comment.save();
       
-      post.comments.push(comment);
+      post.comments.push(comment._id);
       await post.save();
       res.status(200).json(post);
 
