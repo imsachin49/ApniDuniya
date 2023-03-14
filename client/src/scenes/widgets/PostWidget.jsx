@@ -42,6 +42,7 @@ const PostWidget = ({
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
+  const [text,setText]=useState('');
 
   const deleteAccess = (loggedInUserId === postUserId) || user.isAdmin;
 
@@ -106,7 +107,32 @@ const PostWidget = ({
 
   useEffect(() => {
     getComments();
-  },[])
+  },[comments])
+
+
+  const addComment = async () => {
+    try{
+      const response = await fetch(`http://localhost:3001/comments/${postId}/comments`, {
+        method: "POST",
+        headers:{
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({comment:text}),
+      });
+      const cmt = await response.json();
+    }catch(err){
+      console.log(err);
+    } 
+  }
+
+
+  const handleComment= async (e) => {
+    e.preventDefault();
+    addComment();
+    setText('');
+    console.log("new comment is added");
+  }
 
   return (
     <WidgetWrapper m="2rem 0">
@@ -156,29 +182,30 @@ const PostWidget = ({
           <IconButton onClick={()=>deletePost(`/${postId}`)}>
             {!loading ? <DeleteIcon /> : <CircularProgress />}
           </IconButton>
-        }
-
+        }    
       </FlexBetween>
       {isComments &&
-        
-        (<form>
-          <input type='text' placeholder="add your comment" style={{}} />
-          <Button type="submit">Add</Button>
-        </form>)
+        <div>
+          
+          <form onSubmit={handleComment} style={{display:'flex'}}>
+            <input type="text" onChange={(e)=>setText(e.target.value)} value={text} placeholder="Add a comment" style={{width:'100%',marginLeft:'5px',padding:'5px',outline:'none',border:'none',border:'1px solid #999',borderRadius:'6px',paddingLeft:'10px',fontFamily:"'candara',sans-serif",fontSize:'20px',background:'none'}} />
+            <Button type="submit" style={{backgroundColor:'black',color:'primary',margin:'0px 4px'}}>Add</Button>
+          </form>
 
-       (
-        <Box mt="0.5rem">
-          {comments.map((comment) => (
-            <Box key={comment._id}>
-              <Divider />
-              <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                <b style={{fontSize:'15px',textTransform:'capitalize',color:'#333'}}>{comment.name ? comment.name : "unknown"} : </b>{comment.comment}
-              </Typography>
-            </Box>
-          ))}
-          <Divider />
-        </Box>
-      )}
+          <Box mt="0.5rem">
+            {comments.map((comment) => (
+              <Box key={comment._id}>
+                <Divider />
+                <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
+                  <b style={{fontSize:'15px',textTransform:'capitalize',color:'#999'}}>{comment.name ? comment.name : "unknown"} : </b>{comment.comment}
+                </Typography>
+              </Box>
+            ))}
+            <Divider />
+          </Box>
+
+        </div>
+      }
     </WidgetWrapper>
   );
 };
