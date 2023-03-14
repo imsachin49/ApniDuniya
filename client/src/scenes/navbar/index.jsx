@@ -32,6 +32,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const isAdmin=user.isAdmin;
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
 
@@ -43,14 +44,14 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
-  const [username,setuserName]=useState('');
-  console.log(username);
+  // const [username,setuserName]=useState('');
+  // console.log(username);
 
-  const handleSubmit=(e)=>{
-    e.preventDefault();
-    console.log(username);
-    navigate(`/search?firstName=${username}`);
-  }
+  // const handleSubmit=(e)=>{
+  //   e.preventDefault();
+  //   // console.log(username);
+  //   // navigate(`/search?firstName=${username}`);
+  // }
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt} boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'>
@@ -69,7 +70,7 @@ const Navbar = () => {
         >
           Apni Duniya
         </Typography>
-        {isNonMobileScreens && (
+        {/* {isNonMobileScreens && (
         <FlexBetween
             backgroundColor={neutralLight}
             borderRadius="9px"
@@ -85,7 +86,7 @@ const Navbar = () => {
 
             </form>
           </FlexBetween>
-        )}
+        )} */}
       </FlexBetween>
 
       {/* DESKTOP NAV */}
@@ -100,9 +101,7 @@ const Navbar = () => {
             )}
           </IconButton>
 
-          {/* <Message sx={{ fontSize: "25px" }} /> */}
-          {/* <Notifications sx={{ fontSize: "25px" }} /> */}
-          {/* <Help sx={{ fontSize: "25px" }} /> */}
+
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}

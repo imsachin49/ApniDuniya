@@ -88,10 +88,14 @@ const PostWidget = ({
       console.log(err);
     }
   }  
+
+  // useEffect(() => {
+    // deletePost();
+  // },[])
   
   const getComments = async () => {
     try{
-      const response = await fetch(`http://localhost:3001/comments/${postId}/comments`, {
+      const response = await fetch(`https://apni-duniya-social.vercel.app/comments/${postId}/comments`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -112,7 +116,7 @@ const PostWidget = ({
 
   const addComment = async () => {
     try{
-      const response = await fetch(`http://localhost:3001/comments/${postId}/comments`, {
+      const response = await fetch(`https://apni-duniya-social.vercel.app/comments/${postId}/comments`, {
         method: "POST",
         headers:{
           Authorization: `Bearer ${token}`,
@@ -125,7 +129,6 @@ const PostWidget = ({
       console.log(err);
     } 
   }
-
 
   const handleComment= async (e) => {
     e.preventDefault();
@@ -188,7 +191,7 @@ const PostWidget = ({
         <div>
           
           <form onSubmit={handleComment} style={{display:'flex'}}>
-            <input type="text" onChange={(e)=>setText(e.target.value)} value={text} placeholder="Add a comment" style={{width:'100%',marginLeft:'5px',padding:'5px',outline:'none',border:'none',border:'1px solid #999',borderRadius:'6px',paddingLeft:'10px',fontFamily:"'candara',sans-serif",fontSize:'20px',background:'none'}} />
+            <input type="text" onChange={(e)=>setText(e.target.value)} value={text} placeholder="Add a comment" style={{color:'grey',width:'100%',marginLeft:'5px',padding:'5px',outline:'none',border:'none',border:'1px solid #999',borderRadius:'6px',paddingLeft:'10px',fontFamily:"'candara',sans-serif",fontSize:'20px',background:'none'}} />
             <Button type="submit" style={{backgroundColor:'black',color:'primary',margin:'0px 4px'}}>Add</Button>
           </form>
 

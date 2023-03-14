@@ -7,6 +7,6 @@ const {verifyToken}=require("../middleware/auth.js");
 router.get("/:id", verifyToken, getUser);
 router.get("/:id/friends", verifyToken, getUserFriends);
 router.patch("/:id/:friendId", verifyToken, addRemoveFriend);
-router.get('/find/me',findUser);
+router.get('/find/me',verifyToken,findUser);
 
 module.exports = router;
