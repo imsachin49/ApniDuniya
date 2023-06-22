@@ -21,7 +21,16 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box flexBasis={isNonMobileScreens ? "26%" : undefined} 
+          sx={{
+            height: 'fit-content',
+            '@media (min-width: 1050px)': {
+              position: 'sticky',
+              top: '100px',
+              scrollBehavior: 'smooth',
+            },
+          }} 
+        >
           <UserWidget userId={_id} picturePath={picturePath} />
         </Box>
         
@@ -32,7 +41,7 @@ const HomePage = () => {
           <MyPostWidget picturePath={picturePath} />
           <PostsWidget userId={_id} />
         </Box>
-          <FriendListWidget userId={_id} />
+          <FriendListWidget userId={_id}  />
       </Box>
     </Box>
   );

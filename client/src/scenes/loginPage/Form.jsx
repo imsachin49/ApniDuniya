@@ -57,6 +57,7 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
+  const [err, setErr] = useState(false);
 
   const register = async (values, onSubmitProps) => {
     try {
@@ -79,6 +80,7 @@ const Form = () => {
       }
     } catch (error) {
       console.log(error)
+      setErr(true);
     }
   };
 
@@ -105,6 +107,7 @@ const Form = () => {
       navigate("/home");
     }}catch(err){
       console.log(err)
+      setErr(true);
     }
   };
 
@@ -150,7 +153,7 @@ const Form = () => {
                     Boolean(touched.firstName) && Boolean(errors.firstName)
                   }
                   helperText={touched.firstName && errors.firstName}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 2",fontFamily:"'candara', sans-serif" }}
                 />
                 <TextField
                   label="Last Name"
@@ -160,7 +163,7 @@ const Form = () => {
                   name="lastName"
                   error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                   helperText={touched.lastName && errors.lastName}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 2"}}
                 />
                 <TextField
                   label="Location"
@@ -170,7 +173,7 @@ const Form = () => {
                   name="location"
                   error={Boolean(touched.location) && Boolean(errors.location)}
                   helperText={touched.location && errors.location}
-                  sx={{ gridColumn: "span 4" }}
+                  sx={{ gridColumn: "span 4"}}
                 />
                 <TextField
                   label="Occupation"
@@ -182,7 +185,7 @@ const Form = () => {
                     Boolean(touched.occupation) && Boolean(errors.occupation)
                   }
                   helperText={touched.occupation && errors.occupation}
-                  sx={{ gridColumn: "span 4" }}
+                  sx={{ gridColumn: "span 4"}}
                 />
                 <Box
                   gridColumn="span 4"
@@ -228,6 +231,10 @@ const Form = () => {
               onChange={handleChange}
               value={values.email}
               name="email"
+              fontFamily={
+                isLogin ? "Inter, sans-serif" : "Poppins, sans-serif"
+              }
+              autoComplete="off"
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               sx={{ gridColumn: "span 4" }}
@@ -237,6 +244,7 @@ const Form = () => {
               type="password"
               onBlur={handleBlur}
               onChange={handleChange}
+              autoComplete="off"
               value={values.password}
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
@@ -252,9 +260,10 @@ const Form = () => {
               type="submit"
               sx={{
                 m: "2rem 0",
-                p: "1rem",
+                p: ".65rem",
                 backgroundColor: 'rgb(244, 51, 151)',
                 color: 'white',
+                fontFamily: "candara, sans-serif",
                 "&:hover": { color:'white',backgroundColor: '#999' },
               }}
             >
@@ -272,6 +281,7 @@ const Form = () => {
                   cursor: "pointer",
                   color: 'blue',
                 },
+                fontFamily: "candara, sans-serif",
               }}
             >
               {isLogin
@@ -280,6 +290,7 @@ const Form = () => {
             </Typography>
           </Box>
         </form>
+        
       )}
     </Formik>
   );

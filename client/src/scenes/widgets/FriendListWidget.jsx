@@ -32,16 +32,23 @@ const FriendListWidget = ({ userId }) => {
   // console.log(friends)
 
   return (
-    <WidgetWrapper>
+    <WidgetWrapper sx={{
+      height: 'fit-content',
+      '@media (min-width: 1050px)': {
+        position: 'sticky',
+        top: '100px',
+        scrollBehavior: 'smooth',
+      },
+    }} >
       <Typography
         color={palette.neutral.dark}
         variant="h5"
         fontWeight="500"
-        sx={{ mb: "1.5rem" }}
+        sx={{ mb: "1.5rem",fontFamily:'monospace',fontWeight:'bold',fontSize:'1.6rem' }}
       >
-        Friend List
+        Friend List({friends?.length})
       </Typography>
-      <Box display="flex" flexDirection="column" gap="1.5rem">
+      {friends?.length>0 ? <Box display="flex" flexDirection="column" gap="1.5rem">
         {friends.map((friend) => (
           <Friend
             key={friend._id}
@@ -51,7 +58,17 @@ const FriendListWidget = ({ userId }) => {
             userPicturePath={friend.picturePath}
           />
         ))}
-      </Box>
+      </Box> :
+      <Box display="flex" flexDirection="column" gap="1.5rem">
+        <Typography
+          color={palette.neutral.dark}
+          variant="h5"
+          fontWeight="500"
+          sx={{ mb: "1.5rem",fontFamily:'candara,"sans-serif"' }}
+        >
+          No Friends to Show.<br/>
+        </Typography>
+      </Box>}
     </WidgetWrapper>
   );
 };

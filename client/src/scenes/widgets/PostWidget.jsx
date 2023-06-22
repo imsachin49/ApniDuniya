@@ -4,6 +4,7 @@ import {
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
+import { RWebShare } from "react-web-share";
 
 import {Button} from '@mui/material';
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
@@ -159,6 +160,7 @@ const PostWidget = ({
       )}
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
+          
           <FlexBetween gap="0.3rem">
             <IconButton onClick={patchLike}>
               {isLiked ? (
@@ -170,23 +172,21 @@ const PostWidget = ({
             <Typography>{like}</Typography>
           </FlexBetween>
 
-          {/* //comment adding soon */}
-
           <FlexBetween gap="0.3rem">
             <IconButton onClick={() => setIsComments(!isComments)}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
             <Typography>{comments.length}</Typography>
           </FlexBetween>
-
         </FlexBetween>
-
+          
         {deleteAccess && 
           <IconButton onClick={()=>deletePost(`/${postId}`)}>
             {!loading ? <DeleteIcon /> : <CircularProgress />}
           </IconButton>
         }    
       </FlexBetween>
+      
       {isComments &&
         <div>
           

@@ -51,22 +51,29 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
             variant="h5"
             fontWeight="500"
             sx={{
+              cursor: "pointer",
+              fontFamily:"candara,'sans-serif'",
+              color: "gray",
+              textTransform: "capitalize",
+              fontWeight: "bold",
               "&:hover": {
-                color: palette.primary.light,
-                cursor: "pointer",
-              },
+                color: "blue",
+              }
             }}
           >
             {name}
           </Typography>
-          <Typography color={medium} fontSize="0.75rem">
+          <Typography color={medium} fontSize="0.75rem" sx={{
+            cursor: "pointer",
+            fontFamily:"candara,'sans-serif'",
+          }}>
             {subtitle}
           </Typography>
         </Box>
       </FlexBetween>
       <IconButton
         onClick={() => patchFriend()}
-        sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
+        sx={{ backgroundColor: primaryLight, p: "0.6rem",marginLeft:'.6rem' }}
       >
         {isFriend ? (
           <PersonRemoveOutlined sx={{ color: primaryDark }} />

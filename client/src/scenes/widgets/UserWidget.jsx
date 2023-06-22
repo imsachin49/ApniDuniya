@@ -3,14 +3,16 @@ import {
   EditOutlined,
   LocationOnOutlined,
   WorkOutlineOutlined,
+  ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Typography, Divider, useTheme } from "@mui/material";
+import { Box, Typography, Divider, useTheme,IconButton } from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {RWebShare} from 'react-web-share'
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
@@ -49,6 +51,8 @@ const UserWidget = ({ userId, picturePath }) => {
     friends,
   } = user;
 
+  const shareUrl=`https://apni-duniya.vercel.app/profile/${userId}`
+
   return (
     <WidgetWrapper>  
     {/* style={{position:'fixed'}} */}
@@ -56,16 +60,19 @@ const UserWidget = ({ userId, picturePath }) => {
       <FlexBetween
         gap="0.5rem"
         pb="1.1rem"
-        onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap="1rem">
-          <UserImage image={picturePath} />
-          <Box>
+          <UserImage image={picturePath} onClick={() => navigate(`/profile/${userId}`)} />
+          <Box onClick={() => navigate(`/profile/${userId}`)}>
             <Typography
               variant="h4"
               color={dark}
               fontWeight="500"
               sx={{
+                textTransform: "capitalize",
+                fontWeight: "bold",
+                fontFamily:"candara,'sans-serif'",
+
                 "&:hover": {
                   color:'grey',
                   cursor: "pointer",
@@ -74,10 +81,18 @@ const UserWidget = ({ userId, picturePath }) => {
             >
               {firstName} {lastName}
             </Typography>
-            <Typography color={medium}>{friends.length} friends</Typography>
+            <Typography color={medium} sx={{fontFamily:"monospace"}}>{friends?.length} friends</Typography>
           </Box>
         </FlexBetween>
-        <ManageAccountsOutlined />
+
+        <FlexBetween gap="0.3rem">
+          <RWebShare data={{text: "Web Share - GfG",url:shareUrl,title: "GfG",}} onClick={() => console.log("shared successfully!")}>
+            <IconButton>
+              <ShareOutlined />
+            </IconButton>
+          </RWebShare>
+        </FlexBetween>
+
       </FlexBetween>
 
       <Divider />
@@ -86,11 +101,11 @@ const UserWidget = ({ userId, picturePath }) => {
       <Box p="1rem 0">
         <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
           <LocationOnOutlined fontSize="large" sx={{ color: main }} />
-          <Typography color='red'>{location}</Typography>
+          <Typography color='blue' fontSize='15px' fontWeight={'bold'} sx={{fontFamily:"candara,'sans-serif'"}}>Lives in {location}</Typography>
         </Box>
         <Box display="flex" alignItems="center" gap="1rem">
           <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-          <Typography color='red'>{occupation}</Typography>
+          <Typography color='red' fontSize='15px' fontWeight={'bold'} sx={{fontFamily:"candara,'sans-serif'"}}>{occupation}</Typography>
         </Box>
       </Box>
 
